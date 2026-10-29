@@ -1,0 +1,38 @@
+{
+  "source": "docs/brand-source.md",
+  "deliveryDays": {
+    "UK": {
+      "min": 3,
+      "max": 5
+    },
+    "EU": {
+      "min": 5,
+      "max": 8
+    }
+  },
+  "returns": {
+    "days": 14,
+    "condition": "unworn and with tags"
+  },
+  "pricing": {
+    "baseCurrency": "GBP",
+    "referenceCurrency": "EUR",
+    "rateUrl": "https://api.frankfurter.dev/v2/rate/GBP/EUR?providers=ECB",
+    "provider": "ECB via Frankfurter",
+    "maxRateAgeDays": 7,
+    "requestTimeoutMs": 8000
+  },
+  "sizeReference": {
+    "source": "https://www.asos.com/discover/size-charts/women/",
+    "note": "EU equivalents are a general reference, not a garment measurement or a guarantee of fit.",
+    "ukToEu": {
+      "UK 6": "EU 34",
+      "UK 8": "EU 36",
+      "UK 10": "EU 38",
+      "UK 12": "EU 40",
+      "UK 14": "EU 42",
+      "UK 16": "EU 44",
+      "UK 18": "EU 46"
+    }
+  }
+}

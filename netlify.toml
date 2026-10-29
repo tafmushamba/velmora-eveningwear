@@ -1,0 +1,12 @@
+[build]
+command = "npm run build"
+publish = "dist"
+[functions]
+directory = "netlify/functions"
+node_bundler = "esbuild"
+[build.environment]
+NODE_VERSION = "22"
+
+# Preserve the explicit .html routes used by this multi-page storefront.
+[build.processing.html]
+pretty_urls = false

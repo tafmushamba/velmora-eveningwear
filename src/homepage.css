@@ -1,0 +1,248 @@
+/* Critique refinements preserve the existing campaign and full-garment photography. */
+
+
+
+
+
+
+
+
+
+.homepage .product-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+.product-card .card-title {
+  font-size: 14px;
+  flex-wrap: wrap;
+}
+.product-card p,
+.product-card .small {
+  font-size: 14px;
+  line-height: 1.65;
+  color: #615447;
+}
+.product-card .small {
+  margin-top: 10px;
+}
+.making-story .studio-copy {
+  padding: 10%;
+}
+.making-story .studio-copy h2 {
+  font-size: clamp(38px, 4.2vw, 60px);
+}
+.making-story .studio-copy > p {
+  font-size: 15px;
+  max-width: 44ch;
+  margin: 25px 0;
+}
+.making-story .studio-art {
+  aspect-ratio: 4/5;
+  height: 100%;
+  min-height: 560px;
+}
+.making-story .studio-art img {
+  object-fit: cover;
+}
+.making-details {
+  margin: 0 0 28px;
+  width: 100%;
+}
+.making-details > div {
+  padding: 18px 0;
+  border-top: 1px solid #b9aa9a;
+}
+.making-details dt {
+  font-size: 14px;
+  font-weight: 500;
+}
+.making-details dd {
+  margin: 8px 0 0;
+  font-size: 14px;
+  line-height: 1.8;
+  color: #615447;
+}
+.making-story .text-link {
+  font-size: 14px;
+}
+.main-nav #menu-toggle {
+  min-width: 44px;
+  min-height: 44px;
+}
+.more-occasions {
+  padding: 0;
+  border: 0;
+}
+.more-occasions summary {
+  min-height: 44px;
+  align-items: center;
+  width: fit-content;
+  gap: 16px;
+  font-size: 14px;
+}
+.more-occasions a {
+  padding-left: 12px;
+}
+@media (max-width: 1024px) and (min-width: 761px) {
+  .homepage .product-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  
+  .making-story .studio-copy {
+    padding: 8%;
+  }
+}
+@media (max-width: 760px) {
+  .homepage .hero {
+    display: flex;
+    flex-direction: column;
+  }
+  .homepage .hero-copy {
+    order: 0;
+    padding: 24px 5% 20px;
+  }
+  .homepage .hero-copy h1 {
+    font-size: clamp(40px, 11vw, 48px);
+    line-height: 1.02;
+  }
+  .homepage .hero-copy > p {
+    display: none;
+  }
+  .homepage .hero-copy .light-link {
+    margin-top: 17px;
+    font-size: 14px;
+  }
+  .homepage .hero-picture {
+    order: 1;
+    height: clamp(300px, 48svh, 460px);
+    aspect-ratio: auto;
+    background: #e4d7c5;
+  }
+  .homepage .hero-img {
+    object-fit: contain;
+    object-position: center;
+  }
+  .homepage .hero-bottom {
+    display: none;
+  }
+  
+  
+  
+  
+  
+  
+  
+  .homepage .product-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 28px 14px;
+  }
+  .homepage .section-heading {
+    margin-bottom: 22px;
+    gap: 10px;
+  }
+  .homepage .section-heading h2 {
+    font-size: 34px;
+  }
+  .product-card .card-title {
+    font-size: 14px;
+    gap: 5px 10px;
+  }
+  .product-card p,
+  .product-card .small {
+    font-size: 14px;
+  }
+  .making-story .studio-art {
+    min-height: 0;
+    height: 360px;
+    aspect-ratio: auto;
+  }
+  .making-story .studio-copy {
+    padding: 36px 7%;
+  }
+  .making-story .studio-copy h2 {
+    font-size: 42px;
+  }
+  .making-story .studio-copy > p {
+    font-size: 14px;
+    margin: 20px 0;
+  }
+  .making-details {
+    margin-bottom: 18px;
+  }
+  .homepage .closing {
+    padding: 55px 5%;
+  }
+  .homepage .closing h2 {
+    font-size: 43px;
+  }
+  .main-nav {
+    gap: 4px;
+  }
+  .main-nav .wordmark {
+    font-size: 23px;
+  }
+  .nav-right {
+    gap: 7px;
+  }
+}
+
+/* Shared shopping copy and secondary stock link. */
+
+
+
+.stock-shortcut { display:inline-flex; align-items:center; min-height:44px; font-size:14px; line-height:1.5; text-decoration:underline; text-underline-offset:5px; }
+
+.product-card .card-title { display:grid; grid-template-columns:minmax(0,1fr); gap:4px; font-size:14px; line-height:1.5; }
+.product-card .card-title a { min-width:0; overflow-wrap:anywhere; }
+.product-card .card-title > span { font-weight:500; }
+.product-card p,.product-card .small { font-size:14px; line-height:1.55; }
+
+/* Image-led occasion edits sit directly after the campaign. */
+.occasion-discovery { padding:48px 4.5% 40px; scroll-margin-top:110px; }
+.occasion-discovery-heading { display:flex; align-items:baseline; justify-content:space-between; gap:20px; margin-bottom:24px; }
+.occasion-discovery h2 { font-size:clamp(32px,3.8vw,48px); }
+.occasion-discovery .stock-shortcut { gap:12px; flex-shrink:0; }
+.occasion-edits { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:24px; }
+.occasion-edit { min-width:0; display:block; }
+.occasion-edit-image { display:block; aspect-ratio:2/3; overflow:hidden; background:var(--stone); }
+.occasion-edit-image img { display:block; width:100%; height:100%; object-fit:cover; object-position:center; }
+.occasion-edit-label { display:flex; justify-content:space-between; align-items:center; gap:12px; min-height:52px; padding:12px 0; font-size:16px; line-height:1.45; }
+.occasion-edit-label .icon { width:18px; height:18px; flex-shrink:0; }
+.occasion-edit:hover .occasion-edit-label { text-decoration:underline; text-underline-offset:5px; }
+
+/* Native disclosure with real regional estimates and optional event comparison. */
+.home-delivery { margin:0 4.5% 40px; padding:0; border-top:1px solid var(--stone); border-bottom:1px solid var(--stone); }
+.home-delivery > summary { display:flex; justify-content:space-between; align-items:center; gap:24px; min-height:96px; padding:20px 0; list-style:none; }
+.home-delivery > summary::-webkit-details-marker { display:none; }
+.home-delivery > summary::after { content:none; }
+.home-delivery-title { font-family:'Cormorant Garamond',serif; font-size:32px; line-height:1.1; }
+.home-delivery-action { display:inline-flex; align-items:center; gap:16px; min-height:44px; font-size:14px; line-height:1.5; }
+.home-delivery[open] .home-delivery-action svg { transform:rotate(180deg); }
+.home-delivery-content { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:8%; padding:12px 0 32px; }
+.home-delivery h3 { font-family:'Cormorant Garamond',serif; font-size:32px; font-weight:400; margin:0 0 12px; }
+.home-delivery p { font-size:14px; line-height:1.65; margin:0; max-width:55ch; }
+.home-delivery-fields { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; margin:24px 0 18px; }
+.home-delivery-fields label { display:flex; flex-direction:column; gap:8px; font-size:14px; min-width:0; line-height:1.5; }
+.home-delivery-fields label > span { color:#615447; }
+.home-delivery-fields input,.home-delivery-fields select { width:100%; min-width:0; height:48px; padding:10px; font:inherit; font-size:16px; color:var(--ink); background:transparent; border:1px solid var(--stone); border-radius:0; }
+.home-delivery-results > div { display:grid; grid-template-columns:130px minmax(0,1fr); gap:20px; padding:0 0 20px; margin-bottom:20px; border-bottom:1px solid var(--stone); }
+.home-delivery-results h4 { font-family:Inter,sans-serif; font-size:14px; font-weight:500; padding-top:7px; }
+.home-delivery-results strong { display:block; font-family:'Cormorant Garamond',serif; font-size:34px; font-weight:400; line-height:1.1; margin-bottom:10px; }
+.home-delivery-results .inline-link { display:inline-flex; align-items:center; min-height:44px; font-size:14px; margin-top:8px; }
+@media (max-width:760px) {
+ .occasion-discovery { padding:30px 5% 22px; }
+ .occasion-discovery-heading { display:block; margin-bottom:18px; }
+ .occasion-discovery .stock-shortcut { margin-top:4px; }
+ .occasion-edits { gap:10px; }
+ .occasion-edit-label { align-items:flex-start; gap:5px; font-size:14px; min-height:60px; padding:12px 0 4px; }
+ .occasion-edit-label .icon { width:14px; height:14px; margin-top:3px; }
+ .home-delivery { margin:0 5% 28px; }
+ .home-delivery > summary { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:12px; min-height:86px; padding:16px 0; }
+ .home-delivery-title { font-size:27px; }
+ .home-delivery-action { gap:8px; max-width:140px; }
+ .home-delivery-action svg { flex-shrink:0; }
+ .home-delivery-content { grid-template-columns:minmax(0,1fr); gap:28px; padding:10px 0 24px; }
+ .home-delivery h3 { font-size:30px; }
+ .home-delivery-fields { grid-template-columns:minmax(0,1fr); }
+ .home-delivery-results > div { grid-template-columns:105px minmax(0,1fr); gap:12px; }
+ .home-delivery-results strong { font-size:29px; }
+}

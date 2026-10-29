@@ -1,0 +1,163 @@
+.hero-actions { display:flex; flex-wrap:wrap; gap:16px 24px; align-items:center; }
+.choose-primary { padding:14px 22px; min-height:48px; background:var(--wine); color:var(--ivory); font-size:14px; }
+.choose-primary:hover { background:var(--ink); }
+.event-planner { padding:22px; border:1px solid var(--stone); margin:26px 0 18px; }
+.event-planner h2 { font-size:26px; margin:0 0 18px; }
+.event-planner .region-selector { margin:0 0 18px !important; justify-content:space-between; }
+.event-date-label { display:grid; gap:10px; font-size:13px; }
+.event-date-label input { width:100%; min-width:0; min-height:48px; padding:12px; border:1px solid var(--stone); border-radius:0; background:transparent; color:var(--ink); font-size:16px; }
+.event-planner .delivery { padding:16px 0; border:0; background:transparent; margin:0; }
+#event-guidance { padding:14px; background:#ebe4db; font-size:13px; line-height:1.7; margin:0 0 14px; }
+@media(max-width:760px) {
+ .hero-actions { gap:12px; }
+ .homepage .hero-copy .light-link { margin:0; }
+ .event-planner { padding:18px; }
+}
+@media(max-width:360px) { .event-planner .region-selector { display:grid; } }
+@media(max-width:760px) {
+ .nav-right button[data-choose] { display:none; }
+ .hero-actions { justify-content:center; }
+ .hero-actions .choose-primary { width:100%; }
+ .homepage .hero-copy .hero-actions .light-link { width:100%; padding:14px 0; margin:0; }
+}
+.event-planner { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); column-gap:16px; }
+.event-planner h2,.event-planner .delivery,#event-guidance,.event-planner > button { grid-column:1/-1; }
+.event-planner .region-selector { display:grid; gap:10px; margin:0 !important; align-content:start; }
+.event-planner .region-selector select { min-height:48px; width:100%; }
+.event-planner > button { justify-self:start; }
+@media(max-width:360px) { .event-planner { grid-template-columns:1fr; row-gap:14px; } }
+/* Conversation, controls and preferences have separate space in the same panel. */
+#choosing-dialog { width:660px; max-width:calc(100% - 48px); height:auto; max-height:calc(var(--adviser-height,100dvh) - 48px); padding:0; color:var(--ink); background:var(--ivory); border:0; overflow:hidden; }
+#choosing-dialog.is-conversing { height:min(680px,calc(var(--adviser-height,100dvh) - 48px)); }
+#choosing-dialog[open] { display:flex; flex-direction:column; }
+#choosing-dialog::backdrop { background:#1e1b1a99; }
+#choosing-dialog [hidden] { display:none !important; }
+#choosing-dialog .choosing-heading { flex:0 0 auto; display:flex; align-items:center; justify-content:space-between; gap:16px; padding:16px 24px 8px; }
+#choosing-dialog h2 { min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:32px; line-height:1.15; font-weight:400; margin:0; }
+#choosing-close { min-height:44px; flex-shrink:0; padding:0 0 0 12px; text-decoration:underline; text-underline-offset:4px; font-size:14px; }
+#adviser-chat-view { flex:1; min-height:0; display:flex; flex-direction:column; }
+#choosing-dialog .adviser-tools { display:flex; align-items:center; gap:12px; padding:0 24px; border-bottom:1px solid var(--stone); }
+#choosing-dialog .adviser-tools button { min-height:44px; font-size:13px; text-align:left; }
+#adviser-preferences { flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+#adviser-preferences-summary { color:#655b52; }
+#adviser-about,#adviser-reset { flex-shrink:0; text-decoration:underline; text-underline-offset:4px; }
+#choosing-dialog .adviser-scroll { flex:1; min-height:0; overflow-y:auto; overscroll-behavior:contain; padding:20px 24px; scrollbar-color:var(--stone) var(--ivory); scroll-padding:16px; }
+#choosing-context { margin:0 0 16px; font-size:15px; line-height:1.6; }
+#choosing-dialog .adviser-suggestions { display:flex; flex-wrap:wrap; gap:8px; }
+#choosing-dialog .adviser-suggestions button { border:1px solid var(--stone); min-height:44px; padding:10px 14px; font-size:14px; }
+#choosing-dialog .adviser-suggestions button:hover { border-color:var(--wine); }
+#choosing-dialog .adviser-intro-note { font-size:13px; line-height:1.6; color:#655b52; margin:20px 0 0; }
+#adviser-privacy { margin:0 0 20px; font-size:13px; line-height:1.6; color:#655b52; }
+#choosing-dialog #adviser-form { flex:0 0 auto; display:grid; grid-template-columns:minmax(0,1fr) auto; gap:10px; align-items:end; border-top:1px solid var(--stone); padding:14px 24px 20px; margin:0; }
+#choosing-dialog .adviser-input-label { position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap; }
+#choosing-dialog #adviser-message { box-sizing:border-box; width:100%; height:50px; min-width:0; max-height:110px; resize:vertical; padding:12px; color:var(--ink); background:transparent; border:1px solid var(--stone); border-radius:0; font:inherit; font-size:16px; line-height:24px; caret-color:var(--wine); }
+#choosing-dialog #adviser-message::placeholder { color:#696157; opacity:1; }
+#choosing-dialog .adviser-send,#adviser-stop { width:auto; min-width:64px; min-height:50px; padding:12px 16px; margin:0; background:var(--wine); color:var(--ivory); font:inherit; font-size:14px; }
+#choosing-dialog .adviser-send:hover,#adviser-stop:hover { background:var(--ink); }
+#choosing-dialog #adviser-status { color:var(--wine); font-size:14px; line-height:1.6; margin:12px 0; }
+#choosing-dialog #adviser-status:empty { display:none; }
+#choosing-dialog #adviser-error { padding:16px 0; border-top:1px solid var(--stone); }
+#choosing-dialog #adviser-error-message { font-size:14px; line-height:1.6; margin:0 0 8px; }
+#choosing-dialog .adviser-recovery { display:flex; flex-wrap:wrap; gap:8px 20px; align-items:center; }
+#choosing-dialog .adviser-recovery > * { min-height:44px; display:inline-flex; align-items:center; font-size:14px; text-decoration:underline; text-underline-offset:4px; }
+#choosing-dialog .adviser-turn { margin:0 0 24px; overflow-wrap:anywhere; }
+#choosing-dialog .adviser-speaker { display:block; font-size:12px; font-weight:500; margin-bottom:6px; }
+#choosing-dialog .adviser-bubble { margin:0; font-size:15px; line-height:1.65; white-space:pre-wrap; }
+#choosing-dialog .adviser-user { max-width:90%; margin-left:auto; padding:12px 16px; background:#ebe4db; }
+#choosing-dialog .adviser-turn-state { margin:8px 0 0; font-size:13px; color:var(--wine); }
+#choosing-dialog .choosing-piece { display:grid; grid-template-columns:80px minmax(0,1fr); gap:16px; padding:20px 0; border-bottom:1px solid var(--stone); }
+#choosing-dialog .choosing-piece img { width:80px; height:120px; object-fit:contain; }
+#choosing-dialog .choosing-piece h3 { font-size:26px; margin:0 0 8px; }
+#choosing-dialog .choosing-piece p { font-size:13px; line-height:1.65; margin:6px 0; font-variant-numeric:tabular-nums; }
+#choosing-dialog .adviser-price { font-weight:500; }
+#adviser-preferences-view { flex:1; min-height:0; overflow:auto; padding:12px 24px 24px; scrollbar-color:var(--stone) var(--ivory); }
+#preferences-title { font-size:28px; font-weight:400; margin:0 0 20px; }
+#choosing-form { margin:0; }
+#choosing-dialog .choosing-fields { display:grid; grid-template-columns:1fr 1fr; gap:20px 16px; }
+#choosing-dialog .choosing-fields label { display:grid; gap:8px; min-width:0; font-size:14px; }
+#choosing-dialog .choosing-fields input,#choosing-dialog .choosing-fields select { width:100%; min-width:0; min-height:48px; padding:10px; background:transparent; color:var(--ink); border:1px solid var(--stone); border-radius:0; font:inherit; font-size:16px; }
+#choosing-dialog .preferences-note { font-size:14px; line-height:1.6; margin:20px 0; }
+#choosing-dialog .preferences-actions { display:flex; justify-content:space-between; align-items:center; gap:16px; }
+#adviser-preferences-view #adviser-reset { min-height:44px; padding:0; font-size:14px; margin:0 0 16px; }
+#preferences-back { min-height:48px; padding:0 16px; font-size:14px; text-decoration:underline; text-underline-offset:4px; }
+#choosing-dialog button:disabled { opacity:.55; cursor:wait; }
+#choosing-dialog :focus-visible { outline:2px solid var(--wine); outline-offset:3px; }
+#choosing-dialog ::selection { background:var(--wine); color:var(--ivory); }
+@media(max-width:760px),(max-height:480px) {
+ #choosing-dialog { position:fixed; top:var(--adviser-top,0px); left:0; right:0; bottom:auto; width:100%; max-width:none; height:var(--adviser-height,100dvh); max-height:none; margin:0; }
+ #choosing-dialog.is-conversing { height:var(--adviser-height,100dvh); }
+ #choosing-dialog .choosing-heading { padding:8px 16px 0; }
+ #choosing-dialog h2 { font-size:27px; }
+ #choosing-dialog .adviser-tools { padding:0 16px; gap:12px; }
+ #choosing-dialog .adviser-scroll { padding:16px; }
+ #choosing-dialog #adviser-form { padding:12px 16px calc(12px + env(safe-area-inset-bottom,0px)); }
+ #choosing-dialog #adviser-message { resize:none; }
+ #adviser-preferences-view { padding:12px 16px 24px; }
+ #choosing-dialog .adviser-bubble { font-size:15px; }
+}
+@media(max-width:360px) {
+ #choosing-dialog .choosing-fields { grid-template-columns:1fr; }
+ #choosing-dialog .choosing-piece { grid-template-columns:64px minmax(0,1fr); gap:12px; }
+ #choosing-dialog .choosing-piece img { width:64px; height:96px; }
+ #choosing-dialog .adviser-tools { gap:8px; }
+ #choosing-dialog .adviser-tools button { font-size:12px; }
+ #choosing-dialog .adviser-send,#adviser-stop { min-width:58px; padding:12px; }
+}
+
+/* A landscape software keyboard can leave less than 100px of visual height.
+   Keep the message/Send/Close controls usable; put advice beside the composer
+   on wide screens instead of stacking fixed-height chrome above it. */
+#choosing-dialog.is-compact-height .choosing-heading { position:absolute; right:12px; bottom:4px; z-index:1; display:block; padding:0; margin:0; width:44px; height:44px; }
+#choosing-dialog.is-compact-height h2 { position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap; }
+#choosing-dialog.is-compact-height #choosing-close { padding:0; min-width:44px; min-height:44px; }
+#choosing-dialog.is-compact-height .adviser-tools { display:none; }
+#choosing-dialog.is-compact-height .adviser-scroll { min-height:0; padding:6px 12px; }
+#choosing-dialog.is-compact-height #adviser-form { padding:4px 72px 4px 12px; gap:8px; }
+#choosing-dialog.is-compact-height #adviser-message { height:44px; max-height:44px; padding:8px 10px; }
+#choosing-dialog.is-compact-height .adviser-send,#choosing-dialog.is-compact-height #adviser-stop { min-width:58px; min-height:44px; padding:8px 12px; }
+#choosing-dialog.is-compact-height .adviser-turn { margin-bottom:12px; }
+#choosing-dialog.is-compact-height .adviser-user { padding:6px 8px; }
+#choosing-dialog.is-compact-height .adviser-speaker { margin-bottom:2px; }
+#choosing-dialog.is-compact-height .adviser-bubble { font-size:14px; line-height:1.4; }
+#choosing-dialog.is-compact-height #adviser-preferences-view { padding:8px 12px 56px; }
+@media(min-width:600px) {
+ #choosing-dialog.is-compact-height #adviser-chat-view { display:grid; grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr); }
+ #choosing-dialog.is-compact-height #adviser-form { min-height:0; align-items:center; padding:8px 72px 8px 12px; border-top:0; border-left:1px solid var(--stone); }
+ #choosing-dialog.is-compact-height #adviser-message { height:calc(var(--adviser-height) - 16px); max-height:72px; min-height:44px; }
+ #choosing-dialog.is-compact-height .choosing-heading { bottom:calc(50% - 22px); }
+}
+
+/* One labelled entry stays within reach across the storefront. */
+.adviser-launcher {
+ --adviser-edge:24px;
+ --adviser-clearance:16px;
+ position:fixed;
+ right:calc(var(--adviser-edge) + env(safe-area-inset-right, 0px));
+ bottom:calc(var(--adviser-edge) + env(safe-area-inset-bottom, 0px) + var(--adviser-lift, 0px));
+ z-index:11;
+ display:inline-flex;
+ align-items:center;
+ justify-content:center;
+ gap:10px;
+ min-height:48px;
+ max-width:calc(100vw - 48px);
+ padding:12px 18px;
+ margin:0;
+ border:1px solid var(--wine);
+ background:var(--wine);
+ color:var(--ivory);
+ font:inherit;
+ font-size:14px;
+ line-height:1.5;
+}
+.adviser-launcher svg { flex-shrink:0; }
+.adviser-launcher:hover { background:var(--ink); border-color:var(--ink); }
+.adviser-launcher:focus-visible,.product-adviser:focus-visible,.footer-adviser:focus-visible { outline:2px solid var(--wine); outline-offset:4px; }
+body:has(dialog[open], #shop-navigation:not([hidden]), #site-search:not([hidden])) .adviser-launcher { display:none; }
+.product-info .product-adviser { display:inline-flex; min-height:44px; align-items:center; margin:0 0 12px; font-size:14px; text-decoration:underline; text-underline-offset:4px; }
+.footer-links .footer-adviser { display:flex; align-items:center; min-height:44px; padding:8px 0; color:inherit; font:inherit; text-align:left; }
+.footer-links .footer-adviser:hover { text-decoration:underline; text-underline-offset:4px; }
+@media(max-width:760px) { .adviser-launcher { --adviser-edge:16px; } }
+
+#choosing-dialog .adviser-budget-note { font-size:14px; line-height:1.6; margin:12px 0; }
+#choosing-dialog .market-note,#choosing-dialog .choosing-piece p { font-size:14px; line-height:1.55; }

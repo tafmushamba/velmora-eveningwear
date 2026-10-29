@@ -1,0 +1,111 @@
+/* A campaign composition, separate from the catalogue's uncropped product photography. */
+.campaign-hero {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  align-items: end;
+  min-height: 560px;
+  height: min(780px, calc(100svh - 130px));
+  overflow: hidden;
+  color: #f6f1ea;
+  background: #1e1b1a;
+}
+.campaign-picture,
+.campaign-picture img,
+.campaign-hero::after {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.campaign-picture { z-index: -2; }
+.campaign-picture img { object-fit: cover; object-position: center top; }
+/* The shaded copy zone keeps ivory text readable without dimming the garment. */
+.campaign-hero::after {
+  content: "";
+  z-index: -1;
+  background: linear-gradient(90deg, rgb(15 10 8 / 70%) 0%, rgb(15 10 8 / 38%) 35%, transparent 66%);
+  pointer-events: none;
+}
+.campaign-content { padding: 64px 7%; }
+.campaign-content h1 {
+  margin: 0 0 16px;
+  max-width: 9em;
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(64px, 6.3vw, 96px);
+  font-weight: 400;
+  line-height: .97;
+  letter-spacing: -.025em;
+  color: inherit;
+}
+.campaign-content h1 em { font-weight: 400; }
+.campaign-description {
+  max-width: 37ch;
+  margin: 0 0 24px;
+  font: 400 14px/1.6 Inter, sans-serif;
+  color: inherit;
+  text-wrap: pretty;
+}
+.campaign-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 12px 28px; }
+.campaign-shop,
+.campaign-adviser {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  font: 400 14px/1.4 Inter, sans-serif;
+  letter-spacing: 0;
+}
+.campaign-shop {
+  gap: 28px;
+  padding: 14px 22px;
+  color: #1e1b1a;
+  background: #f6f1ea;
+  text-decoration: none;
+  border: 1px solid #f6f1ea;
+  transition: background-color 180ms ease-out;
+}
+.campaign-shop .icon { width: 18px; height: 18px; }
+.campaign-shop:hover { background: #cfc6ba; border-color: #cfc6ba; }
+.campaign-adviser {
+  padding: 10px 0;
+  color: #f6f1ea;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  text-decoration: underline;
+  text-underline-offset: 7px;
+  text-decoration-thickness: 1px;
+  cursor: pointer;
+}
+.campaign-adviser:hover { text-decoration-thickness: 2px; }
+.campaign-actions :focus-visible { outline: 2px solid #f6f1ea; outline-offset: 5px; }
+.campaign-content ::selection { color: #f6f1ea; background: #6b1f2a; }
+@media (max-width: 1000px) and (min-width: 761px) {
+  .campaign-content { padding: 48px 5%; }
+  .campaign-content h1 { font-size: 66px; }
+  .campaign-actions { align-items: flex-start; flex-direction: column; gap: 8px; }
+}
+@media (max-width: 760px) {
+  .campaign-hero { height: calc(100svh - 110px); min-height: 570px; max-height: 850px; }
+  .campaign-picture img { object-position: center 30%; }
+  .campaign-hero::after { background: linear-gradient(0deg, rgb(15 10 8 / 90%) 0%, rgb(15 10 8 / 65%) 19%, transparent 58%); }
+  .campaign-content { padding: 32px 20px 28px; text-align: center; }
+  .campaign-content h1 { font-size: clamp(46px, 12vw, 64px); margin: 0 auto 16px; }
+  .campaign-description { margin: 0 auto 22px; max-width: 32ch; }
+  .campaign-actions { flex-direction: column; gap: 8px; }
+  .campaign-shop { min-width: 245px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .campaign-shop { transition: none; }
+}
+
+body[data-campaign-actions-visible] #adviser-launcher { display: none; }
+/* Keep the shopping action in view on short landscape screens. */
+@media (min-width: 761px) and (max-height: 500px) {
+  .campaign-hero { min-height: 260px; height: calc(100svh - 132px); }
+  .campaign-content { padding: 20px 5%; }
+  .campaign-content h1 { font-size: 44px; margin-bottom: 10px; }
+  .campaign-description { max-width: 44ch; margin-bottom: 12px; line-height: 1.45; }
+  .campaign-actions { flex-direction: row; align-items: center; gap: 12px 24px; }
+}
