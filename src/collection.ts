@@ -1,6 +1,6 @@
 import { sizeLabel } from "./market";
 import { pricingNote, sizeReferenceNote } from "./market-ui";
-import { readRegion, regionSelector, estimateDelivery } from "./delivery";
+import { readRegion, regionSelector, estimateDelivery, catalogueDeliveryWindow, formatDeliverySummary, formatDeliveryBreakdown } from "./delivery";
 import {
   catalogue,
   categories,
@@ -11,7 +11,6 @@ import {
   collectionParams,
   type Product,
 } from "./catalogue";
-import policy from "../data/store-policy.json";
 
 export function collectionPage(card: (p: Product, colour?: string) => string) {
   const params = collectionParams();
@@ -103,10 +102,10 @@ export function collectionPage(card: (p: Product, colour?: string) => string) {
   const active = criteria.filter(([, v]) => v);
   const removeIcon =
     '<svg viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" aria-hidden="true"><path d="m4 4 8 8M4 12l8-8"/></svg>';
-  const days = catalogue
-    .filter((p) => p.made_to_order)
-    .map((p) => p.lead_time_days);
-  const shipping = policy.deliveryDays[region];
+  const deliveryGuidance = (label: string, madeToOrder: boolean) => {
+    const estimate = catalogueDeliveryWindow(catalogue, region, madeToOrder);
+    return estimate ? `<p><strong>${label}</strong><br>${formatDeliverySummary(estimate.total, region)}. ${formatDeliveryBreakdown(estimate.preparation, estimate.shipping, madeToOrder)}</p>` : "";
+  };
   return `<main id="main" tabindex="-1" class="collection-page section"><div class="page-heading"><h1>${escape(heading)}</h1>${q ? `<p>Pieces matching “${escape(q)}”.</p>` : ""}</div>
  <nav class="category-links" aria-label="Product categories"><a href="${escape(collectionUrl({ category: null }, params))}" ${!category ? 'aria-current="page"' : ""}>View all</a>${Object.entries(
    categories,
@@ -116,33 +115,22 @@ export function collectionPage(card: (p: Product, colour?: string) => string) {
        `<a href="${escape(collectionUrl({ category: key }, params))}" ${key === category ? 'aria-current="page"' : ""}>${label}</a>`,
    )
    .join("")}</nav>
- <div class="collection-arrival"><p>Made to order: ${Math.min(...days)}–${Math.max(...days)} days to make, then ${shipping.min}–${shipping.max} days for ${region} delivery. Estimates vary by piece.</p>${regionSelector(region)}<button type="button" class="text-link" data-choose>Help me choose</button><a href="/client-care.html#delivery">Delivery & fit guidance</a></div>
- ${pricingNote()}<div class="collection-toolbar"><div class="collection-summary"><p class="collection-count" role="status">${items.length} ${items.length === 1 ? "piece" : "pieces"}</p><a class="stock-shortcut" href="${escape(collectionUrl({stock:'in-stock',sort:'soonest'},params))}">Shop in-stock pieces</a></div><details class="filter-disclosure"><summary>Filter & search${active.length ? ` <span>(${active.length})</span>` : ""}</summary><form class="collection-filters" action="/collection.html" method="get" aria-label="Filter the collection">${hidden("region", region)}${hidden("category", category)}${hidden("sort", sort)}<div class="collection-search"><label for="collection-search">Search by name, fabric or occasion</label><input type="search" id="collection-search" name="q" value="${escape(q)}" placeholder="Try velvet or winter wedding"></div><div class="filter-controls">${select("occasion", "Occasions", occasions, occasion)}${select("colour", "Colours", [...new Set(catalogue.flatMap((p) => p.colours))], colour)}${select("size", "Sizes", [...new Set(catalogue.flatMap((p) => p.sizes))], size)}${select("fabric", "Fabric", [...new Set(catalogue.map(p => p.fabric))], fabric)}${select("fit", "Fit", [...new Set(catalogue.flatMap(p => p.fit ? [p.fit] : []))], fit)}<label>Availability<select name="stock"><option value="">All pieces</option><option value="in-stock" ${stock ? "selected" : ""}>In stock</option></select></label></div>${sizeReferenceNote()}<button class="apply-filters" type="submit">Show results</button></form></details><form class="collection-sort" action="/collection.html" method="get" aria-label="Sort the collection">${[
-   ...params.entries(),
- ]
-   .filter(([k, v]) => k !== "sort" && v)
-   .map(([k, v]) => hidden(k, v))
-   .join(
-     "",
-   )}<label>Sort<select name="sort" id="collection-sort"><option value="">Collection order</option><option value="low" ${sort === "low" ? "selected" : ""}>Price: low to high</option><option value="soonest" ${sort === "soonest" ? "selected" : ""}>Soonest estimated delivery</option><option value="high" ${sort === "high" ? "selected" : ""}>Price: high to low</option></select></label></form></div>
+ <div class="collection-context">${regionSelector(region, true)}<details class="collection-guidance"><summary>Delivery & fit</summary><div class="collection-guidance-body">${deliveryGuidance("Made to order", true)}${deliveryGuidance("In-stock pieces", false)}<p>Check your chosen piece for its estimate. Arrival dates are not guaranteed.</p>${pricingNote()}<a href="/client-care.html#delivery">Delivery, fit & returns guidance</a></div></details></div>
+ <div class="collection-toolbar"><p class="collection-count" role="status">${items.length} ${items.length === 1 ? "piece" : "pieces"}</p><button type="button" id="collection-filter-open" aria-haspopup="dialog" aria-controls="collection-filter-dialog" aria-expanded="false">Filter & sort${active.length ? ` <span>(${active.length})</span>` : ""}<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/><circle cx="9" cy="6" r="2" fill="var(--ivory)"/><circle cx="15" cy="12" r="2" fill="var(--ivory)"/><circle cx="10" cy="18" r="2" fill="var(--ivory)"/></svg></button></div>
+ <dialog id="collection-filter-dialog" aria-labelledby="collection-filter-title"><div class="collection-filter-head"><h2 id="collection-filter-title" tabindex="-1">Filter & sort</h2><button type="button" id="collection-filter-close" aria-label="Close filters">Close <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="m5 5 14 14M5 19 19 5"/></svg></button></div><form class="collection-filters" action="/collection.html" method="get" aria-label="Filter the collection">${hidden("region", region)}${hidden("category", category)}<div class="collection-filter-fields"><div class="collection-search"><label for="collection-search">Search by name, fabric or occasion</label><input type="search" id="collection-search" name="q" value="${escape(q)}" placeholder="Try velvet or winter wedding"></div><label class="collection-sort">Sort<select name="sort" id="collection-sort"><option value="">Collection order</option><option value="low" ${sort === "low" ? "selected" : ""}>Price: low to high</option><option value="soonest" ${sort === "soonest" ? "selected" : ""}>Soonest estimated delivery</option><option value="high" ${sort === "high" ? "selected" : ""}>Price: high to low</option></select></label><div class="filter-controls">${select("occasion", "Occasions", occasions, occasion)}${select("colour", "Colours", [...new Set(catalogue.flatMap((p) => p.colours))], colour)}${select("size", "Sizes", [...new Set(catalogue.flatMap((p) => p.sizes))], size)}${select("fabric", "Fabric", [...new Set(catalogue.map(p => p.fabric))], fabric)}${select("fit", "Fit", [...new Set(catalogue.flatMap(p => p.fit ? [p.fit] : []))], fit)}<label>Availability<select name="stock"><option value="">All pieces</option><option value="in-stock" ${stock ? "selected" : ""}>In stock</option></select></label></div>${sizeReferenceNote()}<a class="stock-shortcut" href="${escape(collectionUrl({stock:'in-stock',sort:'soonest'},params))}">Shop in-stock pieces</a></div><div class="collection-filter-footer"><a class="clear-filters" href="${clearUrl}">Clear all</a><button class="apply-filters" type="submit">Show results</button></div></form></dialog>
  ${active.length ? `<div class="active-filters" aria-label="Selected filters">${active.map(([key, label]) => `<a class="filter-chip" href="${escape(collectionUrl({ [key]: null }, params))}" aria-label="Remove ${escape(label)}">${escape(label)} ${removeIcon}</a>`).join("")}<a class="clear-filters" href="${clearUrl}">Clear all</a></div>` : ""}
  ${items.length ? `<div class="product-grid">${items.map((p) => card(p, colour || undefined)).join("")}</div>` : `<div class="empty-results"><h2>A different direction.</h2><p>No pieces match this combination. Remove a selected filter above, or explore the full collection.</p><a class="text-link" href="${clearUrl}">Explore all pieces</a></div>`}</main>`;
 }
 export function bindCollection() {
-  const sort = document.querySelector<HTMLSelectElement>("#collection-sort");
-  if (sort) sort.onchange = () => sort.form!.requestSubmit();
-  const filters =
-    document.querySelector<HTMLDetailsElement>(".filter-disclosure");
-  if (filters) {
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape" && filters.open) {
-        filters.open = false;
-        filters.querySelector<HTMLElement>("summary")!.focus();
-      }
-    });
-    document.addEventListener("click", (e) => {
-      if (e.target instanceof Node && !filters.contains(e.target))
-        filters.open = false;
-    });
-  }
+  const dialog = document.querySelector<HTMLDialogElement>("#collection-filter-dialog");
+  const opener = document.querySelector<HTMLButtonElement>("#collection-filter-open");
+  const closer = document.querySelector<HTMLButtonElement>("#collection-filter-close");
+  if (!dialog || !opener || !closer) return;
+  opener.onclick = () => {
+    dialog.showModal();
+    opener.setAttribute("aria-expanded", "true");
+    document.querySelector<HTMLElement>("#collection-filter-title")!.focus();
+  };
+  closer.onclick = () => dialog.close();
+  dialog.addEventListener("close", () => opener.setAttribute("aria-expanded", "false"));
 }

@@ -26,7 +26,7 @@ export function eventMessage(value: string) {
   const days = daysUntil(value);
   if (days === null) return 'Choose your event date to compare how much time you have.';
   if (days < 0) return 'This date has passed. Please choose an upcoming event.';
-  return `${days === 0 ? 'Your event is today' : `Your event is ${days} calendar ${days === 1 ? 'day' : 'days'} away`}. Compare this with the delivery timeframe. Arrival before your event needs confirmation.`;
+  return `${days === 0 ? 'Your event is today' : `Your event is ${days} calendar ${days === 1 ? 'day' : 'days'} away`}. Delivery estimates do not specify working or calendar days. Arrival before your event cannot be confirmed here.`;
 }
 const option = (value:string) => `<option value="${escape(value)}">${escape(titleCase(value))}</option>`;
 type ScreenRect = Pick<DOMRectReadOnly, 'left' | 'right' | 'top' | 'bottom'>;

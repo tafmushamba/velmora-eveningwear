@@ -28,12 +28,21 @@ export function readRegion(): Region {
 export function saveRegion(region: Region) {
   try { sessionStorage.setItem('velmora-region', region); } catch { /* URL retains selection when storage is unavailable. */ }
 }
-export const regionSelector = (region: Region) => `<label class="region-selector">Deliver to<select id="delivery-region" name="region"><option value="UK" ${region === 'UK' ? 'selected' : ''}>United Kingdom</option><option value="EU" ${region === 'EU' ? 'selected' : ''}>European Union</option></select></label>`;
+export const regionSelector = (region: Region, compact = false) => `<label class="region-selector">Deliver to<select id="delivery-region" name="region"><option value="UK" ${region === 'UK' ? 'selected' : ''}>${compact ? 'UK' : 'United Kingdom'}</option><option value="EU" ${region === 'EU' ? 'selected' : ''}>${compact ? 'EU' : 'European Union'}</option></select></label>`;
+type DayRange = { min: number; max: number };
+const dayRange = (days: number | DayRange) => typeof days === 'number' ? String(days) : days.min === days.max ? String(days.min) : `${days.min}–${days.max}`;
+export function formatDeliverySummary(total: DayRange, region: Region): string {
+  return `Estimated ${region} delivery: ${dayRange(total)} days`;
+}
+export function formatDeliveryBreakdown(preparation: number | DayRange, shipping: DayRange, madeToOrder: boolean): string {
+  const preparationCopy = madeToOrder ? 'to make the piece' : 'of preparation';
+  return `Includes ${dayRange(preparation)} days ${preparationCopy} and ${dayRange(shipping)} days of shipping.`;
+}
 export function deliverySummary(product: Product, region: Region) {
   const estimate = estimateDelivery(product, region);
-  return estimate ? `Estimated ${region} delivery: ${estimate.total.min}–${estimate.total.max} days total` : 'Currently unavailable';
+  return estimate ? formatDeliverySummary(estimate.total, region) : 'Currently unavailable';
 }
 export function deliveryBreakdown(product: Product, region: Region) {
   const estimate = estimateDelivery(product, region);
-  return estimate ? `${estimate.preparation} days ${product.made_to_order ? 'to make' : 'before dispatch'}, then ${estimate.shipping.min}–${estimate.shipping.max} days for delivery.` : 'No delivery estimate available.';
+  return estimate ? formatDeliveryBreakdown(estimate.preparation, estimate.shipping, product.made_to_order) : 'No delivery estimate available.';
 }

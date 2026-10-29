@@ -101,6 +101,12 @@ const card = (p: Product, colour?: string) =>
     .join(
       " · ",
     )}</p><p class="small">${p.made_to_order ? "Made to order" : p.in_stock ? "In stock" : "Currently unavailable"}</p><p class="small card-delivery" data-delivery-summary="${p.id}">${deliverySummary(p, region)}</p></article>`;
+// Collection browsing keeps secondary facts in a native disclosure.
+const collectionCard = (p: Product, colour?: string) => {
+  const selectedColour = colour || art[p.id].colour;
+  const availability = p.made_to_order ? "Made to order" : p.in_stock ? "In stock" : "Unavailable";
+  return `<article class="product-card collection-product-card"><a class="product-art" href="${href(p, selectedColour)}">${image(p, false, selectedColour)}<span class="card-availability">${availability}</span></a><div class="collection-card-info"><a class="collection-card-name" href="${href(p, selectedColour)}" aria-label="${escape(p.name)}, ${escape(p.fabric)}, ${p.id}">${escape(p.name)}</a><span class="collection-card-price">${money(p.price_gbp)}</span><div class="card-swatches" role="group" aria-label="${escape(p.name)} colours">${p.colours.map(c => `<a class="card-swatch" href="${href(p, c)}" style="--swatch:${colourMap[c]}" aria-label="View ${escape(p.name)} in ${escape(c)}" ${c === selectedColour ? 'aria-current="true"' : ''}><span aria-hidden="true"></span></a>`).join("")}</div><details class="card-facts"><summary>Fabric, fit & delivery</summary><div><p>${escape(p.fabric)}${p.fit ? ` · ${escape(p.fit)} fit` : ` · ${escape(p.sizes.join(", "))}`}</p><p class="card-delivery" data-delivery-summary="${p.id}">${deliverySummary(p, region)}</p>${p.in_stock ? `<p data-delivery-breakdown="${p.id}">${deliveryBreakdown(p, region)}</p>` : ""}</div></details></div></article>`;
+};
 const makingDays = catalogue
   .filter((p) => p.made_to_order)
   .map((p) => p.lead_time_days);
@@ -183,7 +189,7 @@ document.querySelector("#app")!.innerHTML =
       ? productPage(product)
       : '<main id="main" tabindex="-1" class="section"><h1>Piece not found.</h1><a href="/collection.html">Return to the collection</a></main>'
     : isCollection
-      ? collectionPage(card)
+      ? collectionPage(collectionCard)
       : isStudio
         ? studioPage
         : isCare
@@ -238,7 +244,7 @@ function renderBag() {
     ? bag
         .map((i, index) => {
           const p = catalogue.find((p) => p.id === i.id)!;
-          return `<div class="bag-item"><a class="bag-photo" href="${href(p, i.colour)}" tabindex="-1" aria-hidden="true"><img src="/images/${colourManifest[p.id][i.colour]}" alt="" width="80" height="120"></a><div><a href="${href(p, i.colour)}" aria-label="${escape(p.name)}, ${escape(p.fabric)}, ${p.id}">${escape(p.name)}</a><p>${escape(i.colour)} · ${sizeMarkup(i.size)}</p><span>${money(p.price_gbp)}</span><p class="bag-delivery" data-delivery-summary="${p.id}">${deliverySummary(p, region)}</p></div><button data-remove="${index}" aria-label="Remove ${escape(p.name)}">Remove</button></div>`;
+          return `<div class="bag-item"><a class="bag-photo" href="${href(p, i.colour)}" tabindex="-1" aria-hidden="true"><img src="/images/${colourManifest[p.id][i.colour]}" alt="" width="80" height="120"></a><div><a href="${href(p, i.colour)}" aria-label="${escape(p.name)}, ${escape(p.fabric)}, ${p.id}">${escape(p.name)}</a><p>${escape(i.colour)} · ${sizeMarkup(i.size)}</p><span>${money(p.price_gbp)}</span><p class="bag-delivery" data-delivery-summary="${p.id}">${deliverySummary(p, region)}</p>${p.in_stock ? `<p class="bag-delivery" data-delivery-breakdown="${p.id}">${deliveryBreakdown(p, region)}</p>` : ""}</div><button data-remove="${index}" aria-label="Remove ${escape(p.name)}">Remove</button></div>`;
         })
         .join("") +
       `<p class="small">Delivery estimates apply to each piece. A shared dispatch date is not confirmed.</p><p class="bag-total">Subtotal <span>${subtotalMarkup(bag.map(i => catalogue.find(p => p.id === i.id)!.price_gbp))}</span></p>${pricingNote()}`

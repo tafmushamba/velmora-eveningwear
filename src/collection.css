@@ -1,259 +1,103 @@
-/* A compact shopping entrance with native, keyboard-operable refinement. */
-.collection-page .page-heading {
-  text-align: left;
-  padding: 28px 0 18px;
-}
-.collection-page .page-heading h1 {
-  font-size: clamp(36px, 4vw, 52px);
-}
-.collection-page .page-heading p {
-  margin-top: 12px;
-  font-size: 14px;
-}
-.collection-page .category-links {
-  justify-content: flex-start;
-  padding: 0 0 12px;
-  gap: 4px 28px;
-}
-.collection-arrival {
-  display: flex;
-  justify-content: space-between;
-  gap: 20px;
-  align-items: center;
-  padding: 12px 0;
-  color: #615447;
-  font-size: 14px;
-  line-height: 1.7;
-}
-.collection-arrival a {
-  text-decoration: underline;
-  text-underline-offset: 4px;
-  min-height: 44px;
-  display: inline-flex;
-  align-items: center;
-  flex-shrink: 0;
-}
-.collection-toolbar {
-  display: grid;
-  grid-template-columns: 1fr auto auto;
-  align-items: center;
-  gap: 30px;
-  padding: 10px 0 18px;
-  position: relative;
-}
-.collection-count {
-  font-size: 14px;
-}
-.filter-disclosure {
-  border: 0;
-  padding: 0;
-}
-.filter-disclosure > summary {
-  min-height: 48px;
-  align-items: center;
-  gap: 14px;
-  font-size: 14px;
-}
-.collection-page select {
-  -webkit-appearance: none;
-  appearance: none;
-  background-color: var(--ivory);
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%231e1b1a'%3E%3Cpath d='m4 6 4 4 4-4'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 12px center;
-  background-size: 16px;
-  height: 48px;
-  min-height: 48px;
-  padding: 12px 38px 12px 12px;
-  border: 1px solid var(--stone);
-  border-radius: 0;
-  color: var(--ink);
-  font: inherit;
-  cursor: pointer;
-}
-.collection-sort label {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  font-size: 14px;
-}
-.collection-sort select {
-  width: 190px;
-}
-.collection-page .collection-filters {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
-  z-index: 3;
-  margin: 0;
-  padding: 24px;
-  background: var(--ivory);
-  border: 1px solid var(--stone);
-  box-shadow: 0 12px 24px #1e1b1a12;
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 20px;
-  align-items: end;
-}
-.collection-page .collection-search {
-  grid-column: 1/-1;
-}
-.collection-search input {
-  width: 100%;
-  min-height: 48px;
-  border: 1px solid var(--stone);
-  border-radius: 0;
-  background: transparent;
-  padding: 12px;
-  font-size: 16px;
-  color: var(--ink);
-}
-.collection-page .filter-controls {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 16px;
-  width: 100%;
-}
-.collection-page .filter-controls select {
-  width: 100%;
-  max-width: none;
-  font-size: 14px;
-}
-.collection-page .apply-filters {
-  min-width: 130px;
-  grid-column: auto;
-}
-.active-filters {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 8px 12px;
-  padding: 0 0 18px;
-}
-.filter-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  border: 1px solid var(--stone);
-  padding: 8px 12px;
-  min-height: 44px;
-  font-size: 14px;
-}
-.clear-filters {
-  font-size: 14px;
-  min-height: 44px;
-  display: inline-flex;
-  align-items: center;
-  text-decoration: underline;
-  text-underline-offset: 4px;
-  padding: 6px;
-}
-.filter-chip:hover {
-  border-color: var(--ink);
-}
-@media (max-width: 760px) {
-  .collection-page .page-heading {
-    padding: 20px 0 12px;
-  }
-  .collection-page .page-heading h1 {
-    font-size: 36px;
-  }
-  .collection-page .category-links {
-    gap: 0 20px;
-    padding-bottom: 8px;
-  }
-  .collection-arrival {
-    display: block;
-    padding: 12px 0 0;
-    font-size: 14px;
-  }
-  .collection-arrival a {
-    min-height: 36px;
-  }
-  .collection-toolbar {
-    grid-template-columns: 1fr auto;
-    gap: 8px 16px;
-    padding: 6px 0 14px;
-  }
-  .collection-count {
-    grid-column: 1/-1;
-  }
-  .filter-disclosure > summary {
-    min-height: 48px;
-  }
-  .collection-sort label {
-    gap: 8px;
-    font-size: 14px;
-  }
-  .collection-sort select {
-    width: 160px;
-    font-size: 14px;
-  }
-  .collection-page .collection-filters {
-    grid-template-columns: 1fr;
-    padding: 18px;
-    gap: 18px;
-  }
-  .collection-page .filter-controls {
-    grid-template-columns: 1fr 1fr;
-    gap: 14px;
-  }
-  .collection-page .apply-filters {
-    width: 100%;
-  }
-  .collection-page .collection-search {
-    grid-column: auto;
-  }
-}
-@media (max-width: 360px) {
-  .collection-sort select {
-    width: 145px;
-  }
-  .collection-sort label {
-    gap: 5px;
-  }
-}
-/* Delivery context stays compact, with the same native controls throughout. */
-.region-selector { display: flex; align-items: center; gap: 12px; font-size: 14px; flex-shrink: 0; }
-.region-selector select { font: inherit; color: var(--ink); background-color: var(--ivory); border: 1px solid var(--stone); border-radius: 0; min-height: 44px; padding: 10px 12px; max-width: 100%; }
-.collection-arrival { flex-wrap: wrap; }
-.collection-arrival p { flex: 1 1 300px; }
-.collection-page .filter-controls { grid-template-columns: repeat(3, minmax(0,1fr)); }
-.collection-sort select { width: 225px; }
-.card-delivery { color: var(--ink); line-height: 1.6; }
-.product-info > .region-selector, #product-form > .region-selector { margin-top: 22px; }
-.purchase-returns { font-size: 14px; line-height: 1.7; margin: 12px 0 20px; }
-.bag-delivery { font-size: 14px; line-height: 1.6; }
+/* Catalogue first: category rail, regional context, one refinement control. */
+.collection-page.section { padding:0 4.5% 64px; }
+.collection-page .page-heading { padding:30px 0 24px; text-align:center; }
+.collection-page .page-heading h1 { font-size:clamp(32px,3.4vw,46px); }
+.collection-page .page-heading p { margin:10px 0 0; font-size:14px; line-height:1.5; }
+.collection-page .category-links { display:flex; flex-wrap:nowrap; justify-content:flex-start; gap:10px; padding:0 0 18px; overflow-x:auto; overscroll-behavior-x:contain; scrollbar-width:thin; scrollbar-color:var(--stone) transparent; border:0; }
+.collection-page .category-links a { flex-shrink:0; min-height:44px; padding:8px 16px; border:1px solid var(--stone); font-size:14px; line-height:1.4; white-space:nowrap; }
+.collection-page .category-links a[aria-current="page"] { border-color:var(--ink); color:var(--ink); text-decoration:none; }
+.collection-page .category-links a:hover { border-color:var(--ink); }
+.collection-context { display:flex; justify-content:space-between; align-items:center; gap:12px; border-top:1px solid var(--stone); }
+.region-selector { display:flex; align-items:center; gap:12px; font-size:14px; flex-shrink:0; }
+.region-selector select { font:inherit; color:var(--ink); background-color:var(--ivory); border:1px solid var(--stone); border-radius:0; min-height:44px; padding:10px 12px; max-width:100%; }
+.collection-context .region-selector { gap:8px; font-size:13px; }
+.collection-context .region-selector select { width:64px; border:0; padding:10px 22px 10px 0; font-size:14px; }
+.collection-guidance { position:relative; border:0; padding:0; font-size:14px; }
+.collection-guidance > summary { display:flex; align-items:center; min-height:48px; padding:0; gap:12px; font-size:14px; white-space:nowrap; }
+.collection-guidance-body { position:absolute; right:0; top:100%; z-index:4; width:min(440px,calc(100vw - 32px)); padding:22px; border:1px solid var(--stone); background:var(--ivory); }
+.collection-guidance-body p { margin:0 0 14px; font-size:14px; line-height:1.65; }
+.collection-guidance-body a { display:inline-flex; align-items:center; min-height:44px; text-decoration:underline; text-underline-offset:4px; }
+.collection-toolbar { display:flex; justify-content:space-between; align-items:center; gap:20px; min-height:64px; border-block:1px solid var(--stone); margin:0 0 18px; }
+.collection-count { margin:0; font-size:14px; }
+#collection-filter-open { display:inline-flex; align-items:center; gap:12px; min-height:48px; padding:8px 0 8px 12px; font-size:14px; }
+#collection-filter-dialog { position:fixed; inset:0 0 0 auto; margin:0; width:480px; max-width:100%; height:100dvh; max-height:100dvh; padding:0; border:0; background:var(--ivory); color:var(--ink); overflow:hidden; }
+#collection-filter-dialog::backdrop { background:rgb(30 27 26 / 55%); }
+#collection-filter-dialog[open] { display:flex; flex-direction:column; }
+.collection-filter-head { display:flex; align-items:center; justify-content:space-between; gap:20px; padding:20px 24px; border-bottom:1px solid var(--stone); flex-shrink:0; }
+.collection-filter-head h2 { font-size:32px; }
+#collection-filter-close { min-height:44px; display:inline-flex; align-items:center; gap:8px; font-size:14px; }
+#collection-filter-dialog .collection-filters { display:flex; flex-direction:column; min-height:0; flex:1; align-items:stretch; margin:0; padding:0; border:0; gap:0; width:100%; }
+.collection-filter-fields { flex:1; min-height:0; overflow-y:auto; overscroll-behavior:contain; padding:24px; scrollbar-color:var(--stone) var(--ivory); }
+.collection-search { margin-bottom:22px; }
+.collection-search label,#collection-filter-dialog label { display:flex; flex-direction:column; gap:8px; font-size:14px; line-height:1.5; min-width:0; }
+.collection-search input { width:100%; min-height:48px; padding:12px; font:inherit; font-size:16px; border:1px solid var(--stone); border-radius:0; background:transparent; color:var(--ink); }
+.collection-sort { margin-bottom:22px; }
+#collection-filter-dialog .filter-controls { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:20px 16px; width:100%; }
+.collection-page select { -webkit-appearance:none; appearance:none; background-color:var(--ivory); background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%231e1b1a'%3E%3Cpath d='m4 6 4 4 4-4'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 10px center; background-size:16px; min-height:48px; padding:10px 32px 10px 12px; border:1px solid var(--stone); border-radius:0; color:var(--ink); font:inherit; font-size:16px; cursor:pointer; max-width:100%; }
+#collection-filter-dialog select { width:100%; }
+.collection-page .collection-context select { min-height:44px; font-size:14px; border:0; padding-left:0; }
+.collection-filter-fields [data-size-reference] { margin-top:20px; font-size:14px; line-height:1.6; }
+.collection-filter-fields .stock-shortcut { margin-top:16px; }
+.collection-filter-footer { display:flex; align-items:center; justify-content:space-between; gap:24px; padding:16px 24px max(16px,env(safe-area-inset-bottom)); border-top:1px solid var(--stone); background:var(--ivory); flex-shrink:0; }
+#collection-filter-dialog .apply-filters { min-height:48px; flex:1; padding:12px; color:var(--ivory); background:var(--ink); font-size:16px; }
+.active-filters { display:flex; flex-wrap:wrap; align-items:center; gap:8px 12px; padding:0 0 18px; }
+.filter-chip { display:inline-flex; align-items:center; gap:12px; border:1px solid var(--stone); padding:8px 12px; min-height:44px; font-size:14px; }
+.filter-chip:hover { border-color:var(--ink); }
+.clear-filters { display:inline-flex; align-items:center; min-height:44px; padding:6px; font-size:14px; text-decoration:underline; text-underline-offset:4px; }
+.card-delivery { color:var(--ink); line-height:1.6; }
+.product-info > .region-selector,#product-form > .region-selector { margin-top:22px; }
+.purchase-returns { font-size:14px; line-height:1.7; margin:12px 0 20px; }
+.bag-delivery { font-size:14px; line-height:1.6; }
+.bag-item .bag-delivery { text-transform:none; }
 @media (max-width:760px) {
-  .collection-arrival .region-selector { margin: 8px 0; }
-  .collection-page .filter-controls { grid-template-columns: repeat(2,minmax(0,1fr)); }
-  .collection-sort select { width: 175px; }
+  .collection-page.section { padding:0 0 48px; }
+  .collection-page .page-heading { padding:24px 20px 22px; }
+  .collection-page .page-heading h1 { font-size:30px; }
+  .collection-page .category-links { padding:0 16px 16px; gap:8px; }
+  .collection-page .category-links a { min-height:44px; padding:8px 14px; font-size:13px; }
+  .collection-context { margin:0 16px; gap:8px; }
+  .collection-context .region-selector { min-width:0; gap:6px; font-size:12px; }
+  .collection-page .collection-context select { width:64px; padding-right:22px; font-size:13px; }
+  .collection-guidance > summary { min-height:48px; font-size:13px; gap:8px; }
+  .collection-toolbar { margin:0 16px 12px; min-height:56px; }
+  .collection-page .product-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:30px 8px; }
+  .collection-page .product-card > :not(.product-art) { margin-left:10px; margin-right:10px; }
+  .collection-page .product-card .card-title { margin-top:12px; }
+  .active-filters { padding:0 16px 14px; gap:8px; }
+  .collection-page .empty-results { padding:50px 20px; }
+  #collection-filter-dialog { width:100%; }
+  .collection-filter-head { padding:12px 20px; }
+  .collection-filter-fields { padding:20px; }
+  .collection-filter-footer { padding-inline:20px; }
+  body:has(.collection-page) #adviser-launcher { width:48px; height:48px; padding:12px; gap:0; }
+  body:has(.collection-page) #adviser-launcher span { position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap; }
 }
-@media (max-width:360px) { .collection-sort label { display: block; } .collection-sort select { width: 180px; } }
-.bag-item .bag-delivery { text-transform: none; }
-@media (max-width:760px) {
-  .collection-toolbar { grid-template-columns: 1fr auto; }
-  .collection-count { grid-column: 1; }
-  .filter-disclosure { grid-column: 2; grid-row: 1; }
-  .collection-sort { grid-column: 1/-1; }
-  .collection-sort label { display: flex; }
-  .collection-sort select { flex: 1; width: auto; min-width: 0; }
-}
-@media (max-width:760px) {
-  .collection-arrival { display: flex; gap: 8px 20px; justify-content: flex-start; }
-  .collection-arrival p { margin: 0; flex-basis: 100%; }
-  .collection-arrival .region-selector { flex-basis: 100%; }
-  .collection-arrival a, .collection-arrival button { min-height: 44px; }
-}
-.collection-filters > [data-size-reference] { grid-column: 1 / -1; }
 
-.collection-summary { display:flex; align-items:center; flex-wrap:wrap; gap:4px 20px; }
-.collection-summary .collection-count { margin:0; }
-.collection-page select { font-size:16px; }
-.collection-page .filter-controls select,.collection-sort select { font-size:16px; }
-@media(max-width:760px) {
- .collection-summary { grid-column:1/-1; justify-content:space-between; gap:4px 12px; }
- .filter-disclosure { grid-column:1/-1; grid-row:auto; }
- .collection-page .apply-filters { min-height:48px; font-size:16px; }
+@media (max-width:360px) { #collection-filter-dialog .filter-controls { grid-template-columns:minmax(0,1fr); } }
+
+/* Collection cards: photograph, name, price, real colour options. */
+.collection-page .collection-product-card { min-width:0; align-self:start; }
+.collection-product-card .card-availability { position:absolute; top:10px; left:10px; max-width:calc(100% - 20px); padding:5px 8px; background:var(--ivory); color:var(--ink); font-size:12px; line-height:1.4; letter-spacing:.025em; }
+.collection-page .collection-product-card .collection-card-info { display:flex; flex-direction:column; align-items:stretch; gap:0; margin:0; padding:10px 2px 0; }
+.collection-card-name { display:flex; align-items:center; min-height:44px; font-family:'Cormorant Garamond',serif; font-size:24px; line-height:1.05; }
+.collection-card-name:hover { text-decoration:underline; text-underline-offset:4px; }
+.collection-card-price { display:block; margin-top:2px; font-size:14px; line-height:1.5; }
+.card-swatches { display:flex; flex-wrap:wrap; gap:0; margin-top:2px; }
+.card-swatch { width:44px; height:44px; display:inline-flex; align-items:center; justify-content:flex-start; flex-shrink:0; }
+.card-swatch > span { display:block; width:20px; height:20px; border-radius:50%; background:var(--swatch); box-shadow:inset 0 0 0 1px rgb(30 27 26 / 22%); }
+.card-swatch[aria-current] > span { outline:1px solid var(--ink); outline-offset:3px; }
+.card-swatch:hover > span { outline:1px solid var(--ink); outline-offset:3px; }
+.collection-product-card .card-facts { border:0; padding:0; margin:0; }
+.collection-product-card .card-facts > summary { display:flex; align-items:center; justify-content:space-between; min-height:44px; padding:6px 0; gap:8px; font-size:14px; line-height:1.4; }
+.collection-product-card .card-facts > summary::after { flex-shrink:0; width:6px; height:6px; }
+.collection-product-card .card-facts > div { padding:4px 0 12px; }
+.collection-page .collection-product-card .card-facts p { margin:0 0 6px; font-size:14px; line-height:1.5; color:var(--ink); }
+@media (max-width:760px) {
+  .collection-page .collection-product-card .collection-card-info { padding:8px 10px 0; margin:0; }
+  .collection-card-name { font-size:22px; }
+  .collection-product-card .card-availability { top:8px; left:8px; padding:4px 6px; font-size:11px; }
+  .collection-page .product-grid { row-gap:24px; }
+}
+@media (max-width:360px) {
+  .collection-card-name { font-size:20px; }
 }

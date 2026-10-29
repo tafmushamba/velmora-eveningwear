@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import catalogue from '../data/products.json';
-import { estimateDelivery, catalogueDeliveryWindow } from '../src/delivery';
+import { estimateDelivery, catalogueDeliveryWindow, deliverySummary, deliveryBreakdown } from '../src/delivery';
 import { collectionParams } from '../src/catalogue';
 
 test('source lead time plus regional shipping, without dates', () => {
@@ -56,4 +56,31 @@ test('region precedence: explicit valid URL, session, then UK; unavailable stora
   Object.defineProperty(globalThis,'sessionStorage',{configurable:true,get(){throw new Error('disabled storage');}});
   assert.equal(readRegion(),'UK');
   delete (globalThis as any).location; delete (globalThis as any).sessionStorage;
+});
+
+test('all made-to-order totals match the source brief and catalogue in both regions', () => {
+  const cases = [
+    [14, 'UK', 17, 19], [14, 'EU', 19, 22],
+    [18, 'UK', 21, 23], [18, 'EU', 23, 26],
+    [21, 'UK', 24, 26], [21, 'EU', 26, 29],
+  ] as const;
+  for (const [lead, region, min, max] of cases) {
+    const piece = catalogue.find(p => p.made_to_order && p.lead_time_days === lead)!;
+    assert.deepEqual(estimateDelivery(piece, region)?.total, {min, max});
+    assert.equal(deliverySummary(piece, region), `Estimated ${region} delivery: ${min}–${max} days`);
+    const shipping = region === 'UK' ? '3–5' : '5–8';
+    assert.equal(deliveryBreakdown(piece, region), `Includes ${lead} days to make the piece and ${shipping} days of shipping.`);
+    assert.doesNotMatch(deliverySummary(piece, region) + deliveryBreakdown(piece, region), /working|calendar|dispatch|days total|guaranteed/i);
+  }
+});
+
+test('stock preparation and shipping stay distinct in both regions', () => {
+  const stock = catalogue.find(p => p.id === 'VLM-040')!;
+  assert.equal(stock.made_to_order, false);
+  assert.equal(stock.lead_time_days, 3);
+  assert.equal(deliverySummary(stock, 'UK'), 'Estimated UK delivery: 6–8 days');
+  assert.equal(deliveryBreakdown(stock, 'UK'), 'Includes 3 days of preparation and 3–5 days of shipping.');
+  assert.equal(deliverySummary(stock, 'EU'), 'Estimated EU delivery: 8–11 days');
+  assert.equal(deliveryBreakdown(stock, 'EU'), 'Includes 3 days of preparation and 5–8 days of shipping.');
+  assert.doesNotMatch(deliveryBreakdown(stock, 'UK'), /make|working|calendar|dispatch/i);
 });

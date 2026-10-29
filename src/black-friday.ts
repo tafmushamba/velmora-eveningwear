@@ -1,6 +1,6 @@
 import { escape, titleCase, type Product } from './catalogue';
 import { formatPrice } from './market';
-import { catalogueDeliveryWindow, estimateDelivery, type Region } from './delivery';
+import { catalogueDeliveryWindow, estimateDelivery, formatDeliverySummary, formatDeliveryBreakdown, type Region } from './delivery';
 
 export type BlackFridayFilters = { occasion:string|null; budget:number|null; all:boolean };
 export function readBlackFridayFilters(params:URLSearchParams, products:Product[]):BlackFridayFilters {
@@ -34,11 +34,10 @@ type BlackFridayOptions = {
   card:(product:Product)=>string; delivery:()=>string;
   link:(updates:Record<string,string|null>)=>string; arrow:string;
 };
-const range=({min,max}:{min:number;max:number})=>min===max?String(min):`${min}–${max}`;
 const gbp=(value:number)=>formatPrice(value,'UK',null);
 function stockGuidance(products:Product[],region:Region) {
   const window=catalogueDeliveryWindow(products,region,false);
-  return window ? `<strong>Estimated ${region} delivery: ${range(window.total)} days total.</strong> ${range(window.preparation)} days before dispatch, then ${range(window.shipping)} days for delivery. Timeframes are estimates.` : '';
+  return window ? `<strong>${formatDeliverySummary(window.total, region)}</strong> ${formatDeliveryBreakdown(window.preparation, window.shipping, false)}` : '';
 }
 function results({products,region,filters,card,link,arrow}:BlackFridayOptions) {
   const {clothing,allClothing,accessories}=blackFridaySelection(products,region,filters);
