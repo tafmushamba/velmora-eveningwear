@@ -55,5 +55,3 @@ Use the included `netlify.toml`: build command `npm run build`, publish director
 ## Scope
 
 UK/EU delivery estimates, colour/size selection, occasion filters and a browser-session bag are included. Checkout is unavailable; there is no Shopify connection or order processing. Garment measurements and live production capacity are not supplied. Euro prices are indicative; adviser budgets remain in GBP.
-
-This repository contains only the runnable app, required assets, tests and setup files. Assessment documents, sales plans, presentations, analytics, screenshots, private notes, deployment receipts and local credentials are excluded by `.gitignore`.
